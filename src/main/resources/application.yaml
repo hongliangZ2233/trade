@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/trade
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*Mapper.xml
+
+
+
+logging:
+  level:
+    com.netease.test.trade.mapper: debug

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8"/>
+    <title>java</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+
+    <script language="JavaScript" type="text/javascript">
+        function displayUrlUpload(){
+            var urlUpload = document.getElementById("urlUpload")
+            var fileUpload = document.getElementById("fileUpload")
+            urlUpload.style.display = "block"
+            fileUpload.style.display = "none"
+
+        }
+
+        function displayfileUpload(){
+            var urlUpload = document.getElementById("urlUpload")
+            var fileUpload = document.getElementById("fileUpload")
+            urlUpload.style.display = "none"
+            fileUpload.style.display = "block"
+        }
+
+        function displayImage(){
+            var imageUrlbox = document.getElementById("imageUrl")
+            imageUrl = imageUrlbox.value
+            var imgpre = document.getElementById("imgpre")
+            imgpre.src = imageUrl
+        }
+
+
+        function fileUpload(){
+            var fileObj = document.getElementById("fileUp").files[0]
+            var formData = new FormData()
+            formData.append("file", fileObj)
+            var request = new XMLHttpRequest()
+            request.open("post", "/fileUpload", true)
+            request.onreadystatechange = function (){
+                if(request.readyState==4 && request.status==200){
+                    imageUrl = request.responseText
+                    var imgpre = document.getElementById("imgpre")
+                    imgpre.src = imageUrl
+                    var imageUrlbox = document.getElementById("imageUrl")
+                    imageUrlbox.value = imageUrl
+                }
+            }
+            request.send(formData)
+        }
+
+    </script>
+</head>
+
+<body>
+<div th:include="header::common_header"></div>
+
+<div class="publicmain">
+    <div>
+        <h2>内容发布</h2>
+    </div>
+    <hr>
+    <div class="n-public">
+        <form class="m-form m-form-ht" id="form" method="post" action="/publicSubmit" enctype="multipart/form-data">
+            <div class="fmitem">
+                <label class="fmlab">标题：</label>
+                <div class="fmipt">
+                    <input class="u-ipt ipt" name="title" autofocus placeholder="2-80字符"/>
+                </div>
+            </div>
+            <div class="fmitem">
+                <label class="fmlab">摘要：</label>
+                <div class="fmipt">
+                    <input class="u-ipt ipt" name="summary" placeholder="2-140字符"/>
+                </div>
+            </div>
+            <div class="fmitem">
+                <label class="fmlab">图片：</label>
+                <div class="fmipt" id="uploadType">
+                    <input name="img_radio" type="radio" value="url"  checked th:onclick="displayUrlUpload()"/> 图片地址
+                    <input name="img_radio" type="radio" value="file"  th:onclick="displayfileUpload()"/> 本地上传
+                </div>
+            </div>
+
+            <div class="fmitem">
+                <label class="fmlab"></label>
+                <div class="fmipt" id="urlUpload" >
+                    <input class="u-ipt ipt" id="imageUrl" name="imageUrl" placeholder="图片地址" th:onblur="displayImage()" onblur="displayImage()"/>
+                </div>
+                <div class="fmipt" id="fileUpload" style="display:none">
+                        <input class="u-ipt ipt" name="file" type="file" id="fileUp"/>
+                        <button class="u-btn u-btn-primary" id="upload" type="button" th:onclick="fileUpload()" onclick="fileUpload()">上传</button>
+                </div>
+            </div>
+
+            <div class="fmitem">
+                <label class="fmlab">正文：</label>
+                <div class="fmipt">
+                    <textarea class="u-ipt" name="detail" rows="10" placeholder="2-1000个字符"></textarea>
+                </div>
+            </div>
+            <div class="fmitem">
+                <label class="fmlab">价格：</label>
+                <div class="fmipt">
+                    <input class="u-ipt price" name="price"/>元
+                </div>
+            </div>
+            <div class="fmitem fmitem-nolab fmitem-btn">
+                <div class="fmipt">
+                    <button type="submit" class="u-btn u-btn-primary u-btn-lg">发 布</button>
+                </div>
+            </div>
+        </form>
+        <span class="imgpre"><img src="" id="imgpre" style="width: 20%;height: 40%"></span>
+    </div>
+</div>
+
+</body>
+</html>

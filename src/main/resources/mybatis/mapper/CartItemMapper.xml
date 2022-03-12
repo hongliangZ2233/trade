@@ -1,0 +1,37 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.test.trade.mapper.CartItemMapper">
+
+    <insert id="addCartItem" useGeneratedKeys="true" keyProperty="id">
+        insert into cartItem(id,number) values (#{id}, #{number})
+    </insert>
+
+    <select id="getCartItemById" resultType="com.netease.test.trade.entity.CartItem">
+        select * from cartItem where id = #{id}
+    </select>
+
+    <update id="updataCartItem" >
+        update cartItem set number=#{number}
+        where id = #{id}
+    </update>
+
+    <select id="getAllCartItemVo" resultType="com.netease.test.trade.entity.vo.CartItemVo">
+        select commodity.id id, cartitem.number number, commodity.price price, commodity.title title from cartitem LEFT JOIN commodity ON cartitem.id = commodity.id;
+    </select>
+
+
+    <select id="getAllPurItemForSet" resultType="com.netease.test.trade.entity.PurItem">
+        select commodity.id id, cartitem.number number, commodity.price price, commodity.title title, commodity.imageUrl imageUrl
+        from cartitem LEFT JOIN commodity ON cartitem.id = commodity.id;
+    </select>
+
+
+    <delete id="deleteCartItemBatch" >
+        delete from cartItem where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8"/>
+    <title>java</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+    <script language="JavaScript">
+        function purchase(){
+            if(confirm("确认购买么？")){
+                window.location.href="/purchase";
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div th:include="header::common_header"></div>
+
+<div class="cartmain" id="settleAccount">
+    <div>
+        <h2>已添加到购物车的内容</h2>
+    </div>
+    <hr>
+    <table border="1" width="600" cellspacing="0" cellpadding="4" th:border="1" th:width="600" th:cellspacing="0" th:cellpadding="1" th:if="${cartItemList}">
+        <tr align="center" th:align="center">
+            <th>内容名称</th>
+            <th>数量</th>
+            <th>价格</th>
+        </tr>
+        <tr align="center" th:each="cartItemVo: ${cartItemList}" th:align="center">
+            <td th:text="${cartItemVo.title}">abc</td>
+            <td th:text="${cartItemVo.number}">10</td>
+            <td><span class="v-unit">¥</span><span th:text="${cartItemVo.price}">10</span></td>
+        </tr>
+    </table>
+
+    <hr>
+    <div id="act-btn">
+        <button  id="back"><a th:href="@{${fromUrl}}" th:style="'text-decoration:none;'">退出</a></button>
+        <button  id="Account" th:onclick="purchase()" onclick="purchase()">购买</button>
+    </div>
+</div>
+
+</body>
+</html>

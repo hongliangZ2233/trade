@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+  <meta charset="utf-8"/>
+  <title>java</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+
+</head>
+
+<body>
+
+<div th:include="header::common_header"></div>
+
+<div class="historymain">
+  <div >
+    <h2>已购买的内容</h2>
+  </div>
+  <hr>
+  <table border="1" width="750" cellspacing="0" cellpadding="4" th:border="1" th:width="750" th:cellspacing="0" th:cellpadding="1">
+    <tr>
+      <th>内容图片</th>
+      <th>内容名称</th>
+      <th>购买时间</th>
+      <th>购买数量</th>
+      <th>购买价格</th>
+    </tr>
+    <tbody>
+    <tr th:each="purItem: ${purItems}">
+      <td style="width: 80px" th:width="80px">
+        <a  href="/show?id=1" th:href=@{/show(id=${purItem.id})}><img src="./im/test.jpg" th:style="'height: 40px;width: 70px'" th:src="${purItem.imageUrl}">
+        </a>
+      </td>
+      <td><h4><a href="/show?id=1" th:href=@{/show(id=${purItem.id})} th:text="${purItem.title}">Java编程思想（第4版</a></h4></td>
+      <td><span class="v-time" th:text="${#dates.format(purItem.time,'yyyy-MM-dd HH:mm')}">2016-07-07 23:14</span></td>
+      <td><span class="v-num" th:text="${purItem.number}">0</span></td>
+      <td><span class="v-unit" >¥</span><span class="value" th:text="${purItem.price}">1</span></td>
+    </tr>
+
+    </tbody>
+
+    <tfoot>
+    <tr>
+      <td colspan="4"><div class="total">总计：</div></td>
+      <td><span class="v-unit">¥</span><span class="value" th:text="${totalPrice}">242640</span></td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.test.trade.mapper.AccountMapper">
+
+    <select id="getAccountByName" resultType="com.netease.test.trade.entity.Account">
+        select * from account where userName = #{userName}
+    </select>
+
+</mapper>

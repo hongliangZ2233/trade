@@ -1,0 +1,47 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.test.trade.mapper.CommodityMapper">
+
+    <select id="getAllCommodity" resultType="com.netease.test.trade.entity.Commodity">
+        select * from commodity
+    </select>
+
+    <select id="getUnBuyCommodity" resultType="com.netease.test.trade.entity.Commodity">
+        select * from commodity where sellNum=0
+    </select>
+
+    <select id="getCommodityById" resultType="com.netease.test.trade.entity.Commodity">
+        select * from commodity where id = #{id}
+    </select>
+
+    <select id="getCommodityByIds" resultType="com.netease.test.trade.entity.Commodity">
+        select * from commodity where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertCommodity" useGeneratedKeys="true" keyProperty="id">
+        insert into commodity(title,summary,detail,imageUrl,price) values (#{title}, #{summary},
+        #{detail}, #{imageUrl}, #{price})
+    </insert>
+
+    <update id="updateCommodity" >
+        update commodity set title=#{title}, summary=#{summary}, detail=#{detail}, imageUrl=#{imageUrl}, price=#{price}
+        where id = #{id}
+    </update>
+
+
+    <update id="updateCommoditySellNum" >
+        update commodity set sellNum=#{sellNum}
+        where id = #{id}
+    </update>
+
+
+    <delete id="deleteCommodity" >
+        delete from commodity where id = #{id}
+    </delete>
+
+
+
+</mapper>

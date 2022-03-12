@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<footer th:fragment="common_header">
+    <div id="header">
+        <div>
+            <div class="left">
+                <a th:if="${#strings.isEmpty(session.user)}" href="/login">请[登录]</a>&nbsp;&nbsp;
+                <a th:if="${not #strings.isEmpty(session.user)}" onclick="return false;" th:text="@{欢迎{user}(user=${session.user})}">请[登录]</a>&nbsp;&nbsp;
+                <a th:if="${not #strings.isEmpty(session.user)}" href="/logout">退出</a>&nbsp;
+            </div>
+
+            <div class="right">
+                <a href="/">首页</a>&nbsp;
+                <a th:if="${#strings.equals(session.user, 'buyer')}" href="/history">账务</a>&nbsp;
+                <a th:if="${#strings.equals(session.user, 'buyer')}" href="/showCart">购物车</a>&nbsp;
+                <a th:if="${#strings.equals(session.user, 'seller')}" href="/publish">发布</a>&nbsp;
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body>
+</html>

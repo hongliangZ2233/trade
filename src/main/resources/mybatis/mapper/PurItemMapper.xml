@@ -1,0 +1,20 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.test.trade.mapper.PurItemMapper">
+    <select id="getAllPurItem" resultType="com.netease.test.trade.entity.PurItem">
+        select * from purItem
+    </select>
+
+    <insert id="addPurItemBatch">
+        insert into purItem (id,title,time,number,price,imageUrl) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.title}, #{item.time}, #{item.number}, #{item.price}, #{item.imageUrl} )
+        </foreach>
+    </insert>
+
+    <select id="getPurItemById" resultType="com.netease.test.trade.entity.PurItem">
+        select * from purItem where id = #{id}
+    </select>
+
+
+</mapper>
